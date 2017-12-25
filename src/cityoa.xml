@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="base" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="loginCheck" class="LoginCheckInteceptor" />
+			<interceptor name="logincountCheck" class="LoginCountInteceptor" />
+			<interceptor-stack name="cityoaStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginCheck" />
+				<interceptor-ref name="logincountCheck" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="cityoaStack" />
+
+		<global-results>
+			<result name="login" type="redirect">
+				<param name="location">/page/login/login.jsp</param>
+			</result>
+			<result name="error">/page/error/error.jsp</result>
+			<result name="error1">/page/error/error.jsp</result>
+			<result name="sql">/page/error/error.jsp</result>
+			<result name="null">/page/error/error.jsp</result>
+		</global-results>
+
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+			<exception-mapping exception="java.lang.NullPointerException"
+				result="null" />
+			<exception-mapping exception="java.io.IOException"
+				result="error1" />
+			<exception-mapping exception="org.hibernate.sqlException"
+				result="sql" />
+		</global-exception-mappings>
+
+
+
+
+
+
+
+
+
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+
+		</action>
+
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure">/page/login/login.jsp</result>
+			<result name="input">/page/login/login.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="login" namespace="/page/login" extends="struts-default">
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure">/page/login/login.jsp</result>
+			<result name="input">/page/login/login.jsp</result>
+			<result name="error">/page/error/error.jsp</result>
+		</action>
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+			<result name="error">/page/error/error.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="validata" namespace="/validata" extends="struts-default">
+		<action name="getCode" class="VerificationController" method="getCode">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="json" namespace="/json" extends="json-default">
+		<action name="validataUser" class="UserProcessController"
+			method="validataUser">
+			<result type="json" name="ok">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="user" namespace="/page/User" extends="base">
+		<action name="add" class="UserProcessController" method="add">
+			<result name="add" type="redirectAction">
+				<param name="actionName">tomain</param>
+
+			</result>
+		</action>
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+
+		</action>
+
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure">/page/login/login.jsp</result>
+			<result name="input">/page/login/login.jsp</result>
+		</action>
+
+		<action name="delete" class="UserDeleteController" method="delete">
+			<result name="delete" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+
+		<action name="toadd" class="userfront" method="toadd">
+			<result name="toadd">
+				add.jsp
+			</result>
+		</action>
+
+		<action name="toadd1" class="userfront" method="toadd">
+			<result name="toadd">
+				add1.jsp
+			</result>
+		</action>
+		<action name="tomodify" class="UserModifyController" method="tomodify">
+			<result name="tomodify">
+				modify.jsp
+			</result>
+		</action>
+
+		<action name="modify" class="UserModifyController" method="modify">
+			<result name="modify" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+
+		<action name="tomain" class="userfront" method="tomain">
+			<result name="tomain">
+				main.jsp
+			</result>
+		</action>
+
+	</package>
+
+
+	<package name="vegetable" namespace="/page/vegetable" extends="base">
+		<action name="add" class="vegetableprocess" method="add">
+			<result name="add" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+
+			<result name="failure" type="redirectAction">
+				<param name="actionName">toadd</param>
+			</result>
+		</action>
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+			<result name="error">/page/error/error.jsp</result>
+		</action>
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure">/page/login/login.jsp</result>
+			<result name="input">/page/login/login.jsp</result>
+		</action>
+
+		<action name="delete" class="VegetableDeleteController" method="delete">
+			<result name="delete" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="modify" class="VegetableModifyController" method="modify">
+			<result name="modify" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="toadd" class="vegetablefront" method="toadd">
+			<result name="toadd">
+				add.jsp
+			</result>
+		</action>
+
+		<action name="tomodify" class="VegetableModifyController"
+			method="tomodify">
+			<result name="tomodify">
+				modify.jsp
+			</result>
+		</action>
+		<action name="tomain" class="vegetablefront" method="tomain">
+			<result name="tomain">
+				main.jsp
+			</result>
+		</action>
+		<action name="toview" class="VegetablePhotoToShowController"
+			method="toview">
+			<result name="toview">
+				view.jsp
+			</result>
+		</action>
+		<action name="showphoto" class="VegetablePhotoToShowController"
+			method="show">
+			<result name="sucsess" type="stream">
+				<param name="contentType">${vm.phototype}</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename=${vm.filename}</param>
+			</result>
+		</action>
+
+	</package>
+
+	<package name="hobby" namespace="/page/Hobby" extends="base">
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+
+		</action>
+
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure">/page/login/login.jsp</result>
+			<result name="input">/page/login/login.jsp</result>
+		</action>
+
+		<action name="add" class="HobbyProcessController" method="add">
+			<result name="add" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+			<result name="input">add.jsp</result>
+		</action>
+		<action name="delete" class="HobbyDeleteController" method="delete">
+			<result name="delete" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="modify" class="HobbyModifyController" method="modify">
+			<result name="modify" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="toadd" class="HobbyFrontController" method="toadd">
+			<result name="toadd">
+				add.jsp
+			</result>
+		</action>
+
+		<action name="tomodify" class="HobbyModifyController" method="tomodify">
+			<result name="tomodify">
+				modify.jsp
+			</result>
+		</action>
+		<action name="tomain" class="HobbyFrontController" method="tomain">
+			<result name="tomain">
+				main.jsp
+			</result>
+		</action>
+		<action name="toview" class="VegetablePhotoToShowController"
+			method="toview">
+			<result name="toview">
+				view.jsp
+			</result>
+
+		</action>
+		<action name="detail" class="HobbyToViewController" method="detail">
+			<result name="detail">
+				view.jsp
+			</result>
+			<result name="detail1" type="redirectAction">
+				<param name="actionName">detail1</param>
+			</result>
+		</action>
+		<action name="detail1" class="HobbyToViewController" method="detail1">
+			<result name="detail1">
+				view1.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="vip" namespace="/page/VIP" extends="base">
+		<action name="add" class="VIPProcessController" method="add">
+			<result name="add" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+			<result name="failure" type="redirectAction">
+				<param name="actionName">toadd</param>
+			</result>
+		</action>
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+
+		</action>
+
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure"> /page/login/login.jsp</result>
+			<result name="input"> /page/login/login.jsp</result>
+		</action>
+		<action name="delete" class="VIPDeleteController" method="delete">
+			<result name="delete" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="modify" class="VIPModifyController" method="modify">
+			<result name="modify" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="toadd" class="VIPFrontControllerii" method="toadd">
+			<result name="toadd">
+				add.jsp
+			</result>
+		</action>
+		<action name="tomodify" class="VIPModifyController" method="tomodify">
+			<result name="tomodify">
+				modify.jsp
+			</result>
+		</action>
+		<action name="tomain" class="VIPFrontControllerii" method="tomain">
+			<result name="tomain">
+				main.jsp
+			</result>
+		</action>
+
+		<action name="detail" class="VIPToViewController" method="detail">
+			<result name="detail">
+				view.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="vege_form" namespace="/page/Vege_Form" extends="base">
+		<action name="add" class="Vege_FormProcessController" method="add">
+			<result name="add" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+			<result name="failure" type="redirectAction">
+				<param name="actionName">addconsumer</param>
+			</result>
+
+		</action>
+
+		<action name="logout" class="LogutOutController" method="logout">
+			<result name="logout">
+				/page/login/login.jsp
+			</result>
+
+		</action>
+		<action name="login" class="LoginController" method="login">
+			<result name="login">
+				/page/index/index.jsp
+			</result>
+			<result name="falure">/page/login/login.jsp</result>
+			<result name="input">/page/login/login.jsp</result>
+		</action>
+		<action name="delete" class="Vege_FormDeleteController" method="delete">
+			<result name="delete" type="redirectAction">
+				<param name="actionName">toview?sum=0</param>
+			</result>
+		</action>
+		<action name="modify" class="Vege_FormModifyController" method="modify">
+			<result name="modify" type="redirectAction">
+				<param name="actionName">tomain</param>
+			</result>
+		</action>
+		<action name="tomodify" class="Vege_FormModifyController"
+			method="tomodify">
+			<result name="tomodify">
+				modify.jsp
+			</result>
+		</action>
+		<action name="addconsumer" class="Vege_FormFrontController"
+			method="addconsumer">
+			<result name="addconsumer">
+				consumer.jsp
+			</result>
+
+		</action>
+		<action name="tomain" class="Vege_FormFrontController" method="tomain">
+			<result name="tomain">
+				main.jsp
+			</result>
+			<result name="tofront">
+				consumer.jsp
+			</result>
+		</action>
+		<action name="toview" class="Vege_FormFrontController" method="toview">
+			<result name="toview">
+				view.jsp
+			</result>
+			<result name="failure" type="redirectAction">
+				<param name="actionName">addconsumer</param>
+			</result>
+		</action>
+
+		<action name="search" class="Vege_FormSearchController" method="search">
+			<result name="search">
+				search.jsp
+			</result>
+		</action>
+
+
+		<action name="showphoto" class="VegetablePhotoToShowController"
+			method="show">
+			<result name="sucsess" type="stream">
+				<param name="contentType">${vm.phototype}</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename=${vm.filename}</param>
+			</result>
+		</action>
+
+	</package>
+
+
+
+</struts>

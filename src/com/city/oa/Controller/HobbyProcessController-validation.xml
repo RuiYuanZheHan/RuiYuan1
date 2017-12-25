@@ -1,0 +1,18 @@
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+
+<validators>
+
+
+	<field name="hobbymodel.hobbyname">
+		<field-validator type="requiredstring" >
+			<message>爱好名不能为空</message>
+		</field-validator>
+		<field-validator type="stringlength">
+		<param name="maxLength">6</param>
+			<message>爱好最大长度为6</message>
+		</field-validator>
+	</field>
+</validators>
